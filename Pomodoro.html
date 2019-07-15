@@ -83,14 +83,15 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        25 : 00
+                        {{timer.value}}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <button type="button">開始</button>
-                        <button type="button">休息</button>
-                        <button type="button">暫停</button>
+                        <button type="button" v-on:click="LongTimer">開始</button>
+                        <button type="button" v-on:click="ShortTimer">休息</button>
+                        <button type="button" v-on:click="ContinueTimer">繼續</button>
+                        <button type="button" v-on:click="StopTimer">暫停</button>
                         <button type="button">完成</button>
                     </div>
                 </div>
@@ -173,6 +174,10 @@
 
                     Name : '',
                 },
+                timer : {
+                    fun : {},
+                    value : 0
+                }
             },
             methods: {
                 AddItem() {
@@ -184,7 +189,45 @@
                 },
                 SetWork(index){
                     this.workItem.Name = this.items[index].Name;
-                }
+                },
+                StartTimer(t){ 
+                    this.ClearTimer();
+                    this.timer.value = t; 
+                    this.timer.fun = setInterval(this.EachTime, 1000);
+                },
+                ShortTimer(){
+                    var t = 60 * 10; 
+                    this.StartTimer(t);
+                },
+                LongTimer(){
+                    var t = 60 * 25; 
+                    this.StartTimer(t);
+                },
+                CanelTimer(){
+                    this.ClearTimer();
+                },
+                StopTimer(){
+                    this.ClearTimer();
+                },
+                ClearTimer(){
+                    if(this.timer.fun != null)
+                    {
+                        clearInterval(this.timer.fun);
+                        this.timer.fun = null;
+                    }
+                },
+                ContinueTimer(){
+                    this.timer.fun = setInterval(this.EachTime, 1000);
+                },
+                EachTime(){
+                    this.timer.value --;
+                    if(this.timer.value<=0){
+                        ClearTimer();
+                        alert('Done');
+                    }
+                },
+
+
             }
         })
     </script>
