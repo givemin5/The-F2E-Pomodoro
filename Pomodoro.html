@@ -69,15 +69,16 @@
                     </div>
                 </div>
                 <div class="row">
-                    <ul v-for="item in items">
+                    <ul v-for="(item, index) in items">
                         <li>
-                            {{item.Name}} <button type="button">開始執行</button>
+                            {{item.Name}} <button type="button" v-on:click="SetWork(index)">開始執行</button> <button type="button" v-on:click="RemoveItem(index)">移除</button>
                         </li>
+
                     </ul>
                 </div>
                 <div class="row">
                     <div class="col-sm-12" >
-                        工作項目 : OOO
+                        工作項目 : {{workItem.Name}}
                     </div>
                 </div>
                 <div class="row">
@@ -167,13 +168,23 @@
                     {
                         Name : 'test'
                     }
-                ]
+                ],
+                workItem : {
+
+                    Name : '',
+                },
             },
             methods: {
-                AddItem : function () {
-                    var item = new { Name : this.newItem, Date :  Date.now()};
-                    items.push(item);
+                AddItem() {
+                    var item = { Name : this.newItem, Date :  Date.now()};
+                    this.items.push(item);
                 },
+                RemoveItem(index) {
+                    this.items.splice(index,1);
+                },
+                SetWork(index){
+                    this.workItem.Name = this.items[index].Name;
+                }
             }
         })
     </script>
