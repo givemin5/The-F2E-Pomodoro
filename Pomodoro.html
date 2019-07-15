@@ -69,14 +69,14 @@
                     </div>
                 </div>
                 <div class="row">
-                    <ul>
+                    <ul v-for="item in items">
                         <li>
-                            工作項目 <button type="button">開始執行</button>
+                            {{item.Name}} <button type="button">開始執行</button>
                         </li>
                     </ul>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12" >
                         工作項目 : OOO
                     </div>
                 </div>
@@ -163,11 +163,16 @@
             el: '#app',
             data: {
                 newItem: '123',
-                items : []
+                items : [
+                    {
+                        Name : 'test'
+                    }
+                ]
             },
             methods: {
                 AddItem : function () {
-                    alert('Hello World');
+                    var item = new { Name : this.newItem, Date :  Date.now()};
+                    items.push(item);
                 },
             }
         })
