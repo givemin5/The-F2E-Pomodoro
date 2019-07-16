@@ -62,19 +62,16 @@
                     <div class="col-sm-12">
                         <div class="input-group">
                             <input type="text" class="form-control" v-model="newItem" placeholder="輸入工作名稱">
-                            <div class="input-group-append">
+                            <div class="input-group-btn">
                                 <button class="btn btn-success" v-on:click="AddItem" type="submit">+</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <ul v-for="(item, index) in items">
-                        <li>
-                            {{item.Name}} <button type="button" v-on:click="SetWork(index)">開始執行</button> <button type="button" v-on:click="RemoveItem(index)">移除</button>
-                        </li>
-
-                    </ul>
+                <div class="row" v-for="(item, index) in items">
+                        <div class="col-sm-12">
+                               {{item.Name}} <button type="button" class="btn btn-success" v-on:click="SetWork(index)">開始執行</button> <button type="button"  class="btn btn-danger" v-on:click="RemoveItem(index)">移除</button>
+                        </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12" >
@@ -88,11 +85,11 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <button type="button" v-on:click="LongTimer">開始</button>
-                        <button type="button" v-on:click="ShortTimer">休息</button>
-                        <button type="button" v-on:click="ContinueTimer">繼續</button>
-                        <button type="button" v-on:click="StopTimer">暫停</button>
-                        <button type="button">完成</button>
+                        <button type="button" class="btn btn-primary" v-on:click="LongTimer">開始</button>
+                        <button type="button" class="btn btn-warning" v-on:click="ShortTimer">休息</button>
+                        <button type="button" class="btn btn-info" v-on:click="ContinueTimer">繼續</button>
+                        <button type="button" class="btn btn-secondary" v-on:click="StopTimer">暫停</button>
+                        <button type="button" class="btn btn-success" v-om:click="Finished">完成</button>
                     </div>
                 </div>
                 <div class="row">
@@ -135,7 +132,7 @@
         </section>
     </div>
     <footer>
-        <p>&copy; Somebody 2016</p>
+        <p>&copy; Givemin5 2019</p>
     </footer>
     </div> <!-- /container -->
 
@@ -167,17 +164,20 @@
                 newItem: '123',
                 items : [
                     {
-                        Name : 'test'
+                        Name : 'test',
+                        
                     }
                 ],
                 workItem : {
-
                     Name : '',
+                    LongTimes : 0,
+                    BreakTimes : 0
                 },
                 timer : {
                     fun : {},
                     value : 0
-                }
+                },
+                records : []
             },
             methods: {
                 AddItem() {
@@ -189,6 +189,7 @@
                 },
                 SetWork(index){
                     this.workItem.Name = this.items[index].Name;
+                    this.items.splice(index,1);
                 },
                 StartTimer(t){ 
                     this.ClearTimer();
@@ -222,10 +223,17 @@
                 EachTime(){
                     this.timer.value --;
                     if(this.timer.value<=0){
-                        ClearTimer();
+                        this.ClearTimer();
                         alert('Done');
                     }
                 },
+                Finished(){
+                    var item = {
+                        Name : this.workItem.Name,
+                        
+                    }
+                    this.records.Add(item);
+                }
 
 
             }
