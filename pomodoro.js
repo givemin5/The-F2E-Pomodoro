@@ -60,9 +60,9 @@ var app = new Vue({
             this.ClearTimer();
         },
         StopTimer(){
-            this.ClearTimer();
+            this.ClearTimer(this.timer.value);
         },
-        ClearTimer(){
+        ClearTimer(t){
             this.audio.pause();
             this.audio.currentTime = 0;
             if(this.timer.fun != null)
@@ -71,15 +71,23 @@ var app = new Vue({
                 this.timer.fun = null;
             }
             this.timer.value = 0;
+            if(t>0){
+                this.timer.value = t;
+            }
+
+            
         },
         ContinueTimer(){
+            this.ClearTimer(this.timer.value);
             this.timer.fun = setInterval(this.EachTime, 1000);
         },
         EachTime(){
-            this.timer.value --;
-            if(this.timer.value<=0){
+            var t = this.timer.value --;
+            if(t<=0){
+                this.timer.value = 0;
                 this.ClearTimer();
                 this.audio.play();
+                ClearTimer();
             }
         },
         Finished(){

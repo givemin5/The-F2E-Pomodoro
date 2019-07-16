@@ -49,13 +49,13 @@
                 data-target="#collapsingNavbar">
                 &#9776;
             </button>
-            <a class="navbar-brand" href="#">Logo</a>
+            <a class="navbar-brand" href="#">Pomodoro</a>
         </div>
     </nav>
 
     <div class="container" id="app">
         <section id="grid">
-            <h2>Pomodoro</h2>
+            <h2>建立任務</h2>
             <div>
                 <!-- Bootstrap Grid -->
                 <div class="row">
@@ -97,8 +97,8 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <button type="button" class="btn btn-primary" v-on:click="StartTimer">開始</button>
-                        <button type="button" class="btn btn-info" v-on:click="ContinueTimer">繼續</button>
-                        <button type="button" class="btn btn-secondary" v-on:click="StopTimer">暫停</button>
+                        <button type="button" class="btn btn-info" v-on:click="ContinueTimer"  v-if="timer.value > 0 && timer.fun == null">繼續</button>
+                        <button type="button" class="btn btn-secondary" v-on:click="StopTimer" v-if="timer.fun !== null">暫停</button>
                         <button type="button" class="btn btn-success" v-on:click="Finished">完成</button>
                     </div>
                 </div>
