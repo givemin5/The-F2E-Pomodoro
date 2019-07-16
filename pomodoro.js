@@ -72,7 +72,7 @@ var app = new Vue({
                 Name : this.workItem.Name,
                 
             }
-            this.records.Add(item);
+            this.records.push(item);
         }
 
 
