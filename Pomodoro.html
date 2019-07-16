@@ -73,6 +73,8 @@
                                {{item.Name}} <button type="button" class="btn btn-success" v-on:click="SetWork(index)">開始執行</button> <button type="button"  class="btn btn-danger" v-on:click="RemoveItem(index)">移除</button>
                         </div>
                 </div>
+
+
                 <div class="row">
                     <div class="col-sm-12" >
                         工作項目 : {{workItem.Name}}
@@ -80,13 +82,21 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        {{timer.value}}
+                        <button type="button" class="btn btn-primary" v-on:click="LongTimer">Pomodoro</button>
+                        <button type="button" class="btn btn-primary" v-on:click="ShortBreak">Short Break</button>
+                        <button type="button" class="btn btn-primary" v-on:click="LongBreak">Long Break</button>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        {{Minute}} : {{Second}}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <button type="button" class="btn btn-primary" v-on:click="LongTimer">開始</button>
-                        <button type="button" class="btn btn-warning" v-on:click="ShortTimer">休息</button>
+                        <button type="button" class="btn btn-primary" v-on:click="StartTimer">開始</button>
                         <button type="button" class="btn btn-info" v-on:click="ContinueTimer">繼續</button>
                         <button type="button" class="btn btn-secondary" v-on:click="StopTimer">暫停</button>
                         <button type="button" class="btn btn-success" v-on:click="Finished">完成</button>

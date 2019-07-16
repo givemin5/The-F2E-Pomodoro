@@ -15,9 +15,14 @@ var app = new Vue({
         },
         timer : {
             fun : {},
-            value : 0
+            value : 0,
+            max : 60
         },
-        records : []
+        records : [],
+        audio : {}
+    },
+    created: function(){
+        this.audio = new Audio('audio/Wecker-sound.mp3');
     },
     methods: {
         AddItem() {
@@ -31,18 +36,25 @@ var app = new Vue({
             this.workItem.Name = this.items[index].Name;
             this.items.splice(index,1);
         },
-        StartTimer(t){ 
+        StartTimer(){ 
             this.ClearTimer();
-            this.timer.value = t; 
+            this.timer.value = this.timer.max;
             this.timer.fun = setInterval(this.EachTime, 1000);
         },
-        ShortTimer(){
+        ShortBreak(){
+            var t = 60 * 5; 
+            this.timer.max = t ;
+            this.StartTimer();
+        },
+        LongBreak(){
             var t = 60 * 10; 
-            this.StartTimer(t);
+            this.timer.max = t ;
+            this.StartTimer();
         },
         LongTimer(){
             var t = 60 * 25; 
-            this.StartTimer(t);
+            this.timer.max = t ;
+            this.StartTimer();
         },
         CanelTimer(){
             this.ClearTimer();
@@ -51,11 +63,14 @@ var app = new Vue({
             this.ClearTimer();
         },
         ClearTimer(){
+            this.audio.pause();
+            this.audio.currentTime = 0;
             if(this.timer.fun != null)
             {
                 clearInterval(this.timer.fun);
                 this.timer.fun = null;
             }
+            this.timer.value = 0;
         },
         ContinueTimer(){
             this.timer.fun = setInterval(this.EachTime, 1000);
@@ -64,7 +79,7 @@ var app = new Vue({
             this.timer.value --;
             if(this.timer.value<=0){
                 this.ClearTimer();
-                alert('Done');
+                this.audio.play();
             }
         },
         Finished(){
@@ -73,8 +88,17 @@ var app = new Vue({
                 
             }
             this.records.push(item);
+            this.ClearTimer();
         }
 
 
-    }
+    },
+    computed: {
+        Minute() {
+          return ("00" + Math.floor(this.timer.value / 60)).slice(-2); 
+        },
+        Second(){
+            return ("00" +Math.floor(this.timer.value % 60)).slice(-2); 
+        }
+      }
 })
