@@ -42,7 +42,7 @@
 </head>
 
 <body data-spy="scroll" data-target="#navbar-example">
-
+<div class="container" id="app">
     <nav id="topNav" class="navbar navbar-full navbar-static-top navbar-dark bg-inverse">
         <div class="container">
             <button class="navbar-toggler hidden-md-up pull-right" type="button" data-toggle="collapse"
@@ -50,11 +50,23 @@
                 &#9776;
             </button>
             <a class="navbar-brand" href="#">Pomodoro</a>
+            <div class="collapse navbar-toggleable-sm" id="collapsingNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" v-on:click="SetTab(1)">建立任務</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" v-on:click="SetTab(2)">執行番茄鐘</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" v-on:click="SetTab(3)">顯示紀錄</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div class="container" id="app">
-        <section id="grid">
+    <div class="container" v-if="currentTab==1">
             <h2>建立任務</h2>
             <div>
                 <!-- Bootstrap Grid -->
@@ -70,10 +82,18 @@
                 </div>
                 <div class="row" v-for="(item, index) in items">
                         <div class="col-sm-12">
-                               {{item.Name}} <button type="button" class="btn btn-success" v-on:click="SetWork(index)">開始執行</button> <button type="button"  class="btn btn-danger" v-on:click="RemoveItem(index)">移除</button>
+                               {{item.Name}} <button type="button"  class="btn btn-danger" v-on:click="RemoveItem(index)">移除</button>
                         </div>
                 </div>
+            </div>
+    </div>
+    <div class="container" v-if="currentTab == 2">
 
+            <div class="row" v-for="(item, index) in items">
+                    <div class="col-sm-12">
+                           {{item.Name}} <button type="button" class="btn btn-success" v-on:click="SetWork(index)">開始執行</button> 
+                    </div>
+            </div>
 
                 <div class="row">
                     <div class="col-sm-12" >
@@ -102,6 +122,8 @@
                         <button type="button" class="btn btn-success" v-on:click="Finished">完成</button>
                     </div>
                 </div>
+    </div>
+    <div class="container" v-if="currentTab == 3">
                 <div class="row">
                     <table class="table">
                         <thead class="thead-inverse">
@@ -128,14 +150,12 @@
                     </table>
                 </div>
 
-            </div>
-        </section>
-    </div>
+     </div>
+
     <footer>
         <p>&copy; Givemin5 2019</p>
     </footer>
-    </div> <!-- /container -->
-
+</div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

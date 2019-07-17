@@ -1,6 +1,7 @@
 var app = new Vue({
     el: '#app',
     data: {
+        currentTab : 1,
         newItem: '123',
         items : [
             {
@@ -25,6 +26,9 @@ var app = new Vue({
         this.audio = new Audio('audio/Wecker-sound.mp3');
     },
     methods: {
+        SetTab(tab){
+            this.currentTab = tab;
+        },
         AddItem() {
             var item = { Name : this.newItem, Date :  Date.now()};
             this.items.push(item);
