@@ -2,13 +2,8 @@ var app = new Vue({
     el: '#app',
     data: {
         currentTab : 1,
-        newItem: '123',
-        items : [
-            {
-                Name : 'test',
-                
-            }
-        ],
+        newItem: '',
+        items : [],
         workItem : {
             Name : '',
             LongTimes : 0,
@@ -23,7 +18,7 @@ var app = new Vue({
         audio : {}
     },
     created: function(){
-        this.audio = new Audio('audio/Wecker-sound.mp3');
+        this.audio = new Audio('Wecker-sound/Wecker-sound.mp3');
     },
     methods: {
         SetTab(tab){
@@ -81,6 +76,10 @@ var app = new Vue({
 
             
         },
+        StopAudio(){
+            this.audio.pause();
+            this.audio.currentTime = 0;
+        },
         ContinueTimer(){
             this.ClearTimer(this.timer.value);
             this.timer.fun = setInterval(this.EachTime, 1000);
@@ -91,15 +90,25 @@ var app = new Vue({
                 this.timer.value = 0;
                 this.ClearTimer();
                 this.audio.play();
-                ClearTimer();
             }
         },
         Finished(){
+            var workName = 'None';
+            var date = moment().format('YYYY-MM-DD HH:mm:ss')
+            if(this.workItem.Name.length>0)
+            {
+                workName = this.workItem.Name;
+            }
+
             var item = {
-                Name : this.workItem.Name,
+                Name : workName,
+                FinishDate : date
                 
             }
             this.records.push(item);
+            this.workItem = {
+                Name : ''
+            };
             this.ClearTimer();
         }
 

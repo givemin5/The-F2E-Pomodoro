@@ -38,7 +38,7 @@
             background-color: lightskyblue;
         }
     </style>
-
+    <link rel="stylesheet" type="text/css" href="pomodoro.css">
 </head>
 
 <body data-spy="scroll" data-target="#navbar-example">
@@ -82,7 +82,10 @@
                 </div>
                 <div class="row" v-for="(item, index) in items">
                         <div class="col-sm-12">
-                               {{item.Name}} <button type="button"  class="btn btn-danger" v-on:click="RemoveItem(index)">移除</button>
+                            <div class="item_card">
+                                    {{item.Name}} <button type="button"  class="btn btn-danger" v-on:click="RemoveItem(index)">移除</button>
+                            </div>
+                               
                         </div>
                 </div>
             </div>
@@ -105,13 +108,13 @@
                         <button type="button" class="btn btn-primary" v-on:click="LongTimer">Pomodoro</button>
                         <button type="button" class="btn btn-primary" v-on:click="ShortBreak">Short Break</button>
                         <button type="button" class="btn btn-primary" v-on:click="LongBreak">Long Break</button>
-
+                        <button type="button" class="btn btn-primary" v-on:click="StopAudio">Stop Audio</button>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-sm-12">
-                        {{Minute}} : {{Second}}
+                       <h2> {{Minute}} : {{Second}} </h2>
                     </div>
                 </div>
                 <div class="row">
@@ -129,22 +132,13 @@
                         <thead class="thead-inverse">
                             <tr>
                                 <th>工作項目</th>
-                                <th>開始執行時間</th>
                                 <th>結束執行時間</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Footer 1</th>
-                                <th>Footer 2</th>
-                                <th>Footer 3</th>
-                            </tr>
-                        </tfoot>
                         <tbody v-for="(record, index) in records">
                             <tr>
                                 <td>{{record.Name}}</td>
-                                <td>Cell</td>
-                                <td>Cell</td>
+                                <td>{{record.FinishDate}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -175,6 +169,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js"
         integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD"
         crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
     <script src="vue.js"></script>
     <script src="pomodoro.js"></script>
